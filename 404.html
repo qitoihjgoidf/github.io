@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Page Not Found | Eversage Lab</title>
+  <meta name="description" content="Eversage Lab — Page not found." />
+  <link rel="icon" href="/favicon.ico" />
+  <style>
+    :root{
+      --bg:#0b0b0d; --panel:#121216; --fg:#f5f7fa; --muted:#9aa0a6;
+      --brand:#f0c674; --line:#25262b; --radius:18px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{background:var(--bg);color:var(--fg);font-family:Inter,system-ui,Arial,sans-serif;text-align:center;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:40px;max-width:480px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    h1{font-size:64px;color:var(--brand);margin-bottom:.3em}
+    h2{font-size:24px;margin-bottom:.6em}
+    p{color:var(--muted);margin-bottom:1.2em}
+    a.btn{display:inline-block;padding:12px 22px;border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--fg);transition:.2s}
+    a.btn:hover{background:var(--brand);color:#000}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>404</h1>
+    <h2>Oops! Page not found</h2>
+    <p>The page you are looking for doesn’t exist or has been moved.</p>
+    <a href="/index.html" class="btn">← Back to Home</a>
+  </div>
+</body>
+</html>
