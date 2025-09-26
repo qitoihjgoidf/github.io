@@ -1,119 +1,395 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Eversage Lab | Narrative & Cognitive Game Studio</title>
+  <meta name="description" content="Eversage Lab — A narrative & cognitive game studio building memory-driven games for underserved audiences (starting with 50+) in East Asia. We design AI-powered, privacy-first stories that evolve with you." />
+  <meta name="keywords" content="Eversage Lab, narrative game studio, cognitive games, Web3, AI pen pal, memory tokens, slow metaverse, East Asia, senior games" />
+  <!-- Open Graph -->
+  <meta property="og:title" content="Eversage Lab — Narrative & Cognitive Game Studio" />
+  <meta property="og:description" content="Memory-driven games that evolve with you. A slow metaverse built on meaning, not loot." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://eversage.studio" />
+  <meta property="og:image" content="https://eversage.studio/og-cover.jpg" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Eversage Lab — Narrative & Cognitive Game Studio" />
+  <meta name="twitter:description" content="Memory-driven games that evolve with you." />
+  <meta name="twitter:image" content="https://eversage.studio/og-cover.jpg" />
+  <link rel="icon" href="/favicon.ico" />
   <style>
-    body {
-      margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background-color: #0d0d0d;
-      color: #f5f5f5;
-      line-height: 1.6;
+    :root{
+      --bg:#0b0b0d; --panel:#121216; --muted:#9aa0a6; --fg:#f5f7fa;
+      --brand:#f0c674; --accent:#9cdcfe; --line:#25262b; --ok:#a7f3d0;
+      --danger:#fecaca; --radius:18px; --shadow:0 10px 30px rgba(0,0,0,.35)
     }
-    header {
-      text-align: center;
-      padding: 60px 20px 40px;
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 "Inter", "Helvetica Neue", Arial, system-ui, -apple-system, Segoe UI, Roboto, sans-serif}
+    img{max-width:100%;display:block;height:auto}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1080px;margin:0 auto;padding:0 20px}
+    header.site{
+      position:sticky;top:0;z-index:30;background:rgba(11,11,13,.7);backdrop-filter:saturate(120%) blur(8px);
+      border-bottom:1px solid var(--line)
     }
-    header img {
-      max-width: 160px;
-      margin-bottom: 20px;
+    .nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .nav .logo{display:flex;align-items:center;gap:12px}
+    .nav .logo img{width:40px;height:40px;border-radius:10px}
+    .nav a.btn{padding:10px 14px;border:1px solid var(--line);border-radius:12px}
+    .nav .links{display:flex;gap:18px;align-items:center}
+
+    .hero{padding:96px 0 64px;background:radial-gradient(1200px 500px at 20% -10%, rgba(240,198,116,0.15), transparent),
+                              radial-gradient(1200px 600px at 100% 10%, rgba(156,220,254,0.12), transparent)}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+    .eyebrow{letter-spacing:.2em;color:var(--muted);text-transform:uppercase;font-weight:600}
+    h1{font-size:42px;line-height:1.2;margin:.2em 0 .6em}
+    .lead{color:#cbd0d6;font-size:18px}
+    .cta{display:flex;gap:14px;margin-top:22px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;border:1px solid var(--line);background:#141419;color:#fff;box-shadow:var(--shadow);transition:all 0.2s ease}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 15px 35px rgba(0,0,0,.4)}
+    .btn.primary{background:linear-gradient(135deg, #f0c674, #d6a84a);color:#1a1b1e;border:none}
+    .btn.ghost{background:transparent}
+    .tag{display:inline-block;padding:6px 10px;border:1px dashed #3a3b41;border-radius:10px;color:var(--muted);font-size:12px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .card:hover{transform:translateY(-5px);box-shadow:0 15px 35px rgba(0,0,0,.45)}
+
+    section{padding:70px 0;border-top:1px solid var(--line)}
+    h2{font-size:28px;margin:0 0 14px;color:var(--brand)}
+    p{margin:.6em 0}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+    .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    @media (max-width:900px){.hero-grid,.grid-2,.grid-3{grid-template-columns:1fr}}
+
+    .list{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+    .list li{display:flex;gap:10px;align-items:flex-start}
+    .dot{width:8px;height:8px;border-radius:99px;background:var(--accent);margin-top:9px;flex-shrink:0}
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 24px;
     }
-    header h1 {
-      font-size: 2.5em;
-      margin: 0;
-      letter-spacing: 2px;
+    
+    .shot {
+      aspect-ratio: 1/1; /* 正方形比例 */
+      background: #0e0f13;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    header p {
-      font-size: 1.1em;
-      color: #bbb;
-      margin-top: 10px;
+    
+    .shot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* 保持图片完整内容 */
+      transition: transform 0.4s ease;
     }
-    section {
-      max-width: 960px;
-      margin: 60px auto;
-      padding: 0 20px;
+    
+    .shot:hover img {
+      transform: scale(1.05);
     }
-    section h2 {
-      font-size: 1.8em;
-      margin-bottom: 20px;
-      color: #f0c674;
+    
+    .shot::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.2);
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    section p {
-      margin-bottom: 15px;
+    
+    .shot:hover::after {
+      opacity: 1;
     }
-    .highlight {
-      color: #9cdcfe;
-      font-weight: bold;
+
+    .footer{padding:28px 0;color:#8b9096;font-size:14px}
+    .social{display:flex;gap:16px}
+
+    .pill{display:inline-flex;align-items:center;gap:8px;background:#0e0f13;border:1px solid var(--line);padding:8px 12px;border-radius:999px;color:#cbd0d6;font-size:13px}
+    .muted{color:var(--muted)}
+
+    /* 平滑滚动和焦点样式 */
+    html{scroll-behavior:smooth}
+    *:focus{outline:2px solid var(--accent);outline-offset:2px}
+    
+    /* 表单样式改进 */
+    input{transition:border-color 0.2s ease}
+    input:focus{border-color:var(--accent) !important}
+    
+    /* 响应式改进 */
+    @media (max-width:768px){
+      .nav .links{gap:12px}
+      h1{font-size:32px}
+      .hero{padding:70px 0 50px}
+      section{padding:50px 0}
+      .gallery{grid-template-columns:1fr}
+      .shot{aspect-ratio:16/9}
     }
-    footer {
-      text-align: center;
-      padding: 40px 20px;
-      font-size: 0.9em;
-      color: #777;
-      border-top: 1px solid #333;
+    @media (max-width: 900px) {
+      .gallery {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
-    a {
-      color: #f0c674;
-      text-decoration: none;
+    @media (max-width: 600px) {
+      .gallery {
+        grid-template-columns: 1fr;
+      }
     }
-    a:hover {
-      text-decoration: underline;
+    
+    /* 加载优化 */
+    .shot img{background:linear-gradient(90deg, #0e0f13 0%, #1a1b20 50%, #0e0f13 100%);background-size:200% 100%;animation:loading 1.5s infinite}
+    @keyframes loading{
+      0%{background-position:200% 0}
+      100%{background-position:-200% 0}
     }
   </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Eversage Lab",
+    "url": "https://eversage.studio",
+    "logo": "https://eversage.studio/logo.png",
+    "sameAs": [
+      "https://twitter.com/eversagelab",
+      "https://www.linkedin.com/company/eversagelab",
+      "https://discord.gg/yourinvite"
+    ],
+    "founder": {
+      "@type": "Person",
+      "name": "Claire Chen",
+      "jobTitle": "Founder & Chief Lead",
+      "knowsLanguage": ["en", "zh"],
+      "address": {"@type":"PostalAddress","addressLocality":"Singapore"}
+    }
+  }
+  </script>
 </head>
 <body>
-  <header>
-    <img src="assets/Logo.png" alt="">
-    <h1>Eversage Lab</h1>
-    <p>Narrative & Cognitive Web3 Game Studio</p>
+  <!-- Header / Nav -->
+  <header class="site">
+    <div class="container nav">
+      <div class="logo">
+        <img src="assets/logo.png" alt="Eversage Lab logo" />
+        <strong>Eversage Lab</strong>
+      </div>
+      <nav class="links">
+        <a href="#about">About</a>
+        <!-- <a href="#why">Why Web3</a> -->
+        <a href="#prototype">Prototype</a>
+        <a href="#team">Team</a>
+        <a href="#contact" class="btn">Contact</a>
+      </nav>
+    </div>
   </header>
 
-  <section>
-    <h2>About Us</h2>
-    <p>
-      Eversage Lab is an <span class="highlight">experimental narrative and cognitive game studio</span>, 
-      dedicated to underserved audiences — beginning with the 50+ demographic in East Asia. 
-      We believe the next evolution of games is not about <em>winning</em>, but about 
-      <strong>being seen, remembered, and meaningfully challenged</strong>.
-    </p>
-    <p>
-      Our vision is to build games that <span class="highlight">remember you</span> — 
-      games that evolve with your emotional rhythms and cognitive footprints over months and years.
-    </p>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow">Narrative & Cognitive Game Studio</div>
+        <h1>Memory‑Driven Games that <em>Remember You</em></h1>
+        <p class="lead">We design long‑form, AI‑assisted stories for underserved audiences — starting with the 50+ community in East Asia. Not about winning. About being seen, remembered, and meaningfully challenged.</p>
+        <div class="cta">
+          <a class="btn primary" href="#subscribe" aria-label="Join the journey">Join the journey</a>
+          <a class="btn ghost" href="https://wa.me/6584696614" target="_blank" rel="noopener" aria-label="WhatsApp us">WhatsApp us</a>
+          <span class="pill" title="Privacy-first onboarding">ZK onboarding • Player‑owned memories</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="tag">Concept Preview</div>
+        <h3 style="margin:.6em 0 0">The Slow Metaverse</h3>
+        <p class="muted">A gentle, years‑long narrative that adapts to your pace. AI pen‑pals, memory artifacts, and community‑driven branching paths recorded on‑chain for provenance.</p>
+        <ul class="list">
+          <li><span class="dot"></span><span>Accountless identity (ZK Login) — no KYC friction, persistent memory across seasons.</span></li>
+          <li><span class="dot"></span><span>NFT memory artifacts — your emotional snapshots as collectible mementos.</span></li>
+          <li><span class="dot"></span><span>Time‑credit participation — rewards for presence, not speculation.</span></li>
+        </ul>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>Why Web3?</h2>
-    <p>
-      Traditional game studios optimize for <em>engagement metrics, retention funnels, dopamine loops</em>.  
-      We optimize for <strong>legacy, identity, and presence</strong> — values that require 
-      <span class="highlight">player-owned memories</span> rather than platform-locked data.
-    </p>
-    <ul>
-      <li>Accountless Identity (ZK Login)</li>
-      <li>NFT-based Memory Artifacts</li>
-      <li>Tokenized Participation (Time Credit Model)</li>
-      <li>Smart Contract-backed Narrative Branching</li>
-    </ul>
+  <!-- About -->
+  <section id="about">
+    <div class="container grid-2">
+      <div>
+        <h2>About Us</h2>
+        <p><strong>Eversage Lab</strong> is an experimental narrative & cognitive game studio focused on memory, meaning, and dignity in play. We build stories that evolve with your emotional rhythms over months and years.</p>
+        <p>Our starting audience is the <strong>50+ demographic in East Asia</strong>. We design for accessibility, warmth, and sustained cognitive challenge — blending UX calmness with playful ritual.</p>
+        <div class="card">
+          <strong>Ms.Chen's Note — Why this Lab?</strong>
+          <p class="muted">After years in digital strategy and cross‑border commerce, I’ve seen how products chase metrics and forget people. Games can be different: slow, caring, and beautifully persistent. This lab is my response — a place to craft memory‑driven experiences that age with you.</p>
+        </div>
+      </div>
+      <div>
+        <h2 id="why">Why Web3?</h2>
+        <p>We optimize for <strong>legacy, identity, presence</strong> — values that require <em>player‑owned memories</em>, not platform‑locked data.</p>
+        <ul class="list">
+          <li><span class="dot"></span><span><strong>Accountless Identity</strong> (ZK login) for privacy‑first onboarding.</span></li>
+          <li><span class="dot"></span><span><strong>Memory Artifacts</strong> (ERC‑721 / 1155) — composable visual/audio diaries.</span></li>
+          <li><span class="dot"></span><span><strong>Time Tokens</strong> (non‑speculative, soulbound) — used for narrative voting and co‑creation.</span></li>
+          <li><span class="dot"></span><span><strong>Smart‑contract branching</strong> — micro‑communities influence storylines with on‑chain provenance.</span></li>
+        </ul>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>Long-Term Vision</h2>
-    <p>
-      We are building a <strong>“slow metaverse”</strong> anchored not in land or loot, 
-      but in <span class="highlight">memory and meaning</span>. 
-      Imagine AI pen pals that evolve with you, story arcs that age alongside you, 
-      and memory tokens you can pass to your children.
-    </p>
+  <!-- Prototype / Gallery -->
+  <section id="prototype">
+    <div class="container">
+      <h2>Prototype & Concept Art</h2>
+      <p class="muted">Early exploration of the AI pen‑pal, memory artifact cards, and gentle puzzles. (Replace placeholders below with real screenshots or concept art.)</p>
+      
+      <div class="gallery" aria-label="prototype gallery">
+        <div class="shot">
+          <img src="assets/appu.png" alt="AI Pen-Pal UI" loading="lazy">
+        </div>
+        <div class="shot">
+          <img src="assets/cmg.png" alt="Memory Token Card" loading="lazy">
+        </div>
+        <div class="shot">
+          <img src="assets/mtc.png" alt="Cognitive Mini-game" loading="lazy">
+        </div>
+      </div>
+
+      <div class="cta" style="margin-top:24px">
+        <!--         
+        <a class="btn" href="#contact">Request a private demo</a>
+        <a class="btn ghost" href="/onepager.pdf" target="_blank" rel="noopener">Download one‑pager (PDF)</a> 
+        -->
+      </div>
+    </div>
   </section>
 
-  <footer>
-    © 2025 Eversage Lab |  All Rights Reserved | 
-    <a href="mailto:support@eversage.studio">support@eversage.studio</a>
+  <!-- Stack & Roadmap -->
+  <section id="stack">
+    <div class="container grid-3">
+      <div class="card">
+        <h3>Prototype Stack</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>Frontend: React • Unity WebGL • Three.js</span></li>
+          <li><span class="dot"></span><span>Identity: WalletConnect • Lit • ZK proofs</span></li>
+          <li><span class="dot"></span><span>Narrative Logic: LLM‑assisted + L2 contracts</span></li>
+          <li><span class="dot"></span><span>Storage: IPFS/Arweave + hybrid state</span></li>
+          <li><span class="dot"></span><span>Economy: Soulbound time tokens</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Design Tenets</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>Dignified onboarding, zero‑pressure loops</span></li>
+          <li><span class="dot"></span><span>Readable type, high contrast, calm motion</span></li>
+          <li><span class="dot"></span><span>Years‑long arcs, seasonal rituals</span></li>
+          <li><span class="dot"></span><span>Community memory without extractive hype</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Roadmap (Preview)</h3>
+        <ul class="list">
+          <li><span class="dot"></span><span>P0: Private prototype with 50 pilot users</span></li>
+          <li><span class="dot"></span><span>P1: Memory artifacts mint (closed beta)</span></li>
+          <li><span class="dot"></span><span>P2: Branching events with time‑credits</span></li>
+          <li><span class="dot"></span><span>P3: Regional language packs (EN/ZH/JP)</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section id="team">
+    <div class="container">
+      <div>
+        <h2>Team</h2>
+        <div class="card">
+          <h3>At Eversage Lab, our strength lies in a small, multidisciplinary team that blends strategy, creativity, and technology</h3>
+          <p class="muted">The founding team brings together the academic achievements of the University of Melbourne and Fudan University in psychology, philosophy, and computer science. Its members have participated in projects involving educational content, narrative games, and cognitive training, and possess a wealth of project experience.</p>
+          <div class="social">
+            <!-- 
+            <a class="pill" href="https://www.linkedin.com/in/" target="_blank" rel="noopener">LinkedIn</a>
+            <a class="pill" href="https://twitter.com/" target="_blank" rel="noopener">Twitter</a>
+             -->
+          </div>
+        </div>
+      </div>
+      <!-- 
+      <div>
+        <h2>Advisors & Friends</h2>
+        <div class="card">
+          <p class="muted">We collaborate with friends across game design, cognitive research, and Web3 security. Interested in advising? Reach out below.</p>
+          <a class="btn" href="#contact">Become an advisor</a>
+        </div>
+      </div>
+       -->
+    </div>
+  </section>
+
+  <!-- Subscribe / Contact -->
+  <section id="subscribe">
+    <div class="container grid-2">
+      <div>
+        <h2>Join Our Journey</h2>
+        <p class="muted">Get occasional updates on prototypes, closed betas, and essays on memory‑driven design.</p>
+        <form class="card" action="#" method="post" onsubmit="alert('Thanks! We\'ll be in touch.'); return false;">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@domain.com" style="margin-top:8px;padding:12px 14px;border-radius:12px;border:1px solid var(--line);width:100%;background:#0f1014;color:#fff" />
+          <div style="display:flex;gap:10px;margin-top:12px">
+            <button class="btn primary" type="submit">Subscribe</button>
+            <a class="btn ghost" href="https://discord.gg/eversagelab" target="_blank" rel="noopener">Join Discord</a>
+          </div>
+        </form>
+      </div>
+      <div id="contact">
+        <h2>Partnerships & Press</h2>
+        <div class="card">
+          <p><strong>Email</strong>: <a href="mailto:support@eversage.studio">support@eversage.studio</a></p>
+          <!-- <p><strong>WhatsApp</strong>: <a href="https://wa.me/1234567890" target="_blank" rel="noopener">+xx xxxx xxxx</a></p> -->
+          <p><strong>Deck / One‑pager</strong>: <a href="/onepager.pdf" target="_blank" rel="noopener">Request access</a></p>
+          <p class="muted">We welcome thoughtful partners in accessibility, cognitive research, narrative design, and privacy‑preserving infrastructure.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div>© <span id="year"></span> Eversage Lab — All rights reserved.</div>
+      <div class="social">
+        <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vSOpLQelCoUkklD5qJS4Lmm15nd0eeHsE5McOUpCISkHTllPGEAV2q87seZ788O6NfYK1n1CfBXrhjV/pubhtml#gid=0" class="muted" target="_blank" rel="noopener">Web3 Events</a>
+        <!-- <a href="https://www.linkedin.com/company/eversagelab" class="muted" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://mirror.xyz/" class="muted" target="_blank" rel="noopener">Mirror</a> -->
+        <a href="/privacy.html" class="muted">Privacy Policy</a>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // 图片加载优化
+    document.addEventListener('DOMContentLoaded', function() {
+      const images = document.querySelectorAll('.shot img');
+      
+      images.forEach(img => {
+        if (img.complete) {
+          img.style.background = 'none';
+        } else {
+          img.addEventListener('load', function() {
+            this.style.background = 'none';
+          });
+        }
+      });
+    });
+  </script>
 </body>
 </html>
-
-
