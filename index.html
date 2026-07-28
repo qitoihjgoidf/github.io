@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#e8f4f0" />
+  <title>熊莉莎 · 生日快乐</title>
+  <meta property="og:title" content="给熊莉莎的生日贺卡" />
+  <meta property="og:description" content="2000.07.28 · 愿你被温柔以待" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --mint: #d4ebe4;
+      --sky: #a8d4e6;
+      --cream: #faf8f5;
+      --blush: #f5c6c0;
+      --text: #3d4f4a;
+      --text-soft: #6b7f78;
+      --gold: #c9a962;
+      --shadow: rgba(61, 79, 74, 0.12);
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+
+    .stage {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: linear-gradient(165deg, #eef7f4 0%, var(--cream) 35%, #f0eef8 70%, #e3f0f5 100%);
+    }
+
+    .bg-orbs {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(40px);
+      opacity: 0.55;
+      animation: drift 18s ease-in-out infinite;
+    }
+
+    .orb:nth-child(1) {
+      width: 55vw; height: 55vw; max-width: 280px; max-height: 280px;
+      background: var(--mint);
+      top: -8%; left: -12%;
+      animation-delay: 0s;
+    }
+
+    .orb:nth-child(2) {
+      width: 45vw; height: 45vw; max-width: 220px; max-height: 220px;
+      background: var(--sky);
+      bottom: 10%; right: -15%;
+      animation-delay: -6s;
+    }
+
+    .orb:nth-child(3) {
+      width: 35vw; height: 35vw; max-width: 160px; max-height: 160px;
+      background: var(--blush);
+      top: 40%; left: 50%;
+      transform: translateX(-50%);
+      opacity: 0.35;
+      animation-delay: -12s;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(12px, -18px) scale(1.05); }
+      66% { transform: translate(-8px, 10px) scale(0.98); }
+    }
+
+    .petals {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .petal {
+      position: absolute;
+      width: 10px;
+      height: 14px;
+      background: linear-gradient(135deg, rgba(245, 198, 192, 0.9), rgba(255, 255, 255, 0.6));
+      border-radius: 50% 50% 50% 0;
+      opacity: 0;
+      animation: fall linear infinite;
+      transform: rotate(45deg);
+    }
+
+    @keyframes fall {
+      0% {
+        opacity: 0;
+        transform: translateY(-10vh) rotate(45deg) translateX(0);
+      }
+      8% { opacity: 0.7; }
+      92% { opacity: 0.5; }
+      100% {
+        opacity: 0;
+        transform: translateY(110vh) rotate(405deg) translateX(30px);
+      }
+    }
+
+    .slides {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: max(24px, env(safe-area-inset-top)) 28px max(32px, env(safe-area-inset-bottom));
+      text-align: center;
+    }
+
+    .slide-inner {
+      max-width: 340px;
+      width: 100%;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.35em;
+      color: var(--text-soft);
+      text-transform: none;
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .slide.active .eyebrow {
+      animation: rise 0.9s ease forwards 0.15s;
+    }
+
+    .title-name {
+      font-size: clamp(36px, 10vw, 44px);
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--text);
+      line-height: 1.35;
+      opacity: 0;
+      transform: translateY(16px);
+    }
+
+    .slide.active .title-name {
+      animation: rise 1s ease forwards 0.35s;
+    }
+
+    .title-name em {
+      font-style: normal;
+      background: linear-gradient(120deg, var(--text) 0%, #5a8f82 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 28px auto;
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    .slide.active .divider {
+      animation: expand 0.8s ease forwards 0.7s;
+    }
+
+    @keyframes expand {
+      to { opacity: 1; transform: scaleX(1); }
+    }
+
+    .body-text {
+      font-size: 16px;
+      line-height: 1.85;
+      color: var(--text-soft);
+      font-weight: 300;
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    .slide.active .body-text {
+      animation: rise 0.9s ease forwards;
+    }
+
+    .slide.active .body-text:nth-of-type(1) { animation-delay: 0.85s; }
+    .slide.active .body-text.line2 { animation-delay: 1.05s; }
+    .slide.active .body-text.line3 { animation-delay: 1.25s; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .date-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 32px;
+      padding: 12px 22px;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 999px;
+      box-shadow: 0 8px 32px var(--shadow);
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transform: scale(0.92);
+    }
+
+    .slide.active .date-badge {
+      animation: pop 0.7s cubic-bezier(0.34, 1.4, 0.64, 1) forwards 1.1s;
+    }
+
+    @keyframes pop {
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .date-badge span.dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .cake-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: scale(0.5) rotate(-10deg);
+    }
+
+    .slide.active .cake-icon {
+      animation: cakeIn 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards 0.2s;
+    }
+
+    @keyframes cakeIn {
+      to { opacity: 1; transform: scale(1) rotate(0); }
+    }
+
+    .hint {
+      position: fixed;
+      bottom: max(20px, env(safe-area-inset-bottom));
+      left: 0;
+      right: 0;
+      z-index: 10;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-soft);
+      opacity: 0.75;
+      animation: pulse 2.5s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.45; transform: translateY(0); }
+      50% { opacity: 0.85; transform: translateY(-3px); }
+    }
+
+    .hint.hidden { display: none; }
+
+    .dots-nav {
+      position: fixed;
+      bottom: max(52px, calc(env(safe-area-inset-bottom) + 36px));
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      gap: 8px;
+    }
+
+    .dots-nav button {
+      width: 6px;
+      height: 6px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(61, 79, 74, 0.2);
+      padding: 0;
+      cursor: pointer;
+      transition: transform 0.3s, background 0.3s;
+    }
+
+    .dots-nav button.active {
+      background: var(--gold);
+      transform: scale(1.35);
+    }
+
+    .music-btn {
+      position: fixed;
+      top: max(16px, env(safe-area-inset-top));
+      right: 16px;
+      z-index: 20;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 16px var(--shadow);
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+
+    .music-btn:active { transform: scale(0.94); }
+
+    .music-btn.playing {
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .sign-off {
+      margin-top: 28px;
+      font-size: 15px;
+      color: var(--text);
+      letter-spacing: 0.2em;
+      opacity: 0;
+    }
+
+    .slide.active .sign-off {
+      animation: rise 0.9s ease forwards 1.4s;
+    }
+
+    .sparkle {
+      display: inline-block;
+      animation: twinkle 1.5s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.92); }
+    }
+
+    .open-tap {
+      margin-top: 40px;
+      padding: 14px 36px;
+      border: 1px solid rgba(201, 169, 98, 0.45);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--text);
+      font-size: 15px;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .slide.active .open-tap {
+      animation: rise 0.8s ease forwards 1s;
+    }
+
+    .open-tap:active {
+      transform: scale(0.97);
+      background: rgba(255, 255, 255, 0.85);
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="bg-orbs" aria-hidden="true">
+      <div class="orb"></div>
+      <div class="orb"></div>
+      <div class="orb"></div>
+    </div>
+    <div class="petals" id="petals" aria-hidden="true"></div>
+
+    <div class="slides" id="slides">
+      <!-- 0: 封面 -->
+      <section class="slide active" data-index="0">
+        <div class="slide-inner">
+          <p class="eyebrow">HAPPY BIRTHDAY</p>
+          <h1 class="title-name">致 <em>熊莉莎</em></h1>
+          <div class="divider"></div>
+          <p class="body-text">七月末的风很轻，<br />像第一次记住你的那天。</p>
+          <button type="button" class="open-tap" id="openBtn">轻触开启</button>
+        </div>
+      </section>
+
+      <!-- 1: 祝福 -->
+      <section class="slide" data-index="1">
+        <div class="slide-inner">
+          <div class="cake-icon" aria-hidden="true">🎂</div>
+          <p class="body-text">愿新的一岁，</p>
+          <p class="body-text line2">眼里有光，心里有暖，</p>
+          <p class="body-text line3">所遇皆温柔，所行皆坦途。</p>
+          <div class="date-badge">
+            <span>2000.07.28</span>
+            <span class="dot"></span>
+            <span id="ageLabel">狮子座</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2: 结尾 -->
+      <section class="slide" data-index="2">
+        <div class="slide-inner">
+          <p class="eyebrow">FOR YOU</p>
+          <h2 class="title-name" style="font-size: clamp(28px, 8vw, 34px);">生日快乐 <span class="sparkle">✦</span></h2>
+          <div class="divider"></div>
+          <p class="body-text">谢谢你出现在我的生命里。<br />以后每个 7 月 28 日，<br />都想认真地为你庆祝。</p>
+          <p class="sign-off">—— 永远站在你这边的我</p>
+        </div>
+      </section>
+    </div>
+
+    <nav class="dots-nav" id="dotsNav" aria-label="页码"></nav>
+    <p class="hint" id="hint">左右滑动 · 继续阅读</p>
+
+    <button type="button" class="music-btn" id="musicBtn" title="背景音乐" aria-label="播放或暂停背景音乐">♪</button>
+  </div>
+
+  <!-- 无版权轻音乐：Web Audio 简易旋律，避免外链失效 -->
+  <script>
+    (function () {
+      var TOTAL = 3;
+      var current = 0;
+      var slidesEl = document.getElementById("slides");
+      var hint = document.getElementById("hint");
+      var openBtn = document.getElementById("openBtn");
+      var dotsNav = document.getElementById("dotsNav");
+      var musicBtn = document.getElementById("musicBtn");
+      var ageLabel = document.getElementById("ageLabel");
+
+      function calcAge() {
+        var birth = new Date(2000, 6, 28);
+        var today = new Date();
+        var age = today.getFullYear() - birth.getFullYear();
+        var m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+        if (today.getMonth() === 6 && today.getDate() === 28) {
+          ageLabel.textContent = age + " 岁 · 生日快乐";
+        } else {
+          ageLabel.textContent = "狮子座 · " + age + " 岁";
+        }
+      }
+      calcAge();
+
+      for (var i = 0; i < TOTAL; i++) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.setAttribute("aria-label", "第 " + (i + 1) + " 页");
+        if (i === 0) b.classList.add("active");
+        (function (idx) {
+          b.addEventListener("click", function () { goTo(idx); });
+        })(i);
+        dotsNav.appendChild(b);
+      }
+
+      function setActiveSlide(index) {
+        var slides = document.querySelectorAll(".slide");
+        slides.forEach(function (s, i) {
+          s.classList.toggle("active", i === index);
+        });
+        dotsNav.querySelectorAll("button").forEach(function (btn, i) {
+          btn.classList.toggle("active", i === index);
+        });
+      }
+
+      function goTo(index) {
+        if (index < 0 || index >= TOTAL) return;
+        current = index;
+        slidesEl.style.transform = "translateX(-" + current * 100 + "%)";
+        setActiveSlide(current);
+        if (current > 0) hint.classList.add("hidden");
+      }
+
+      openBtn.addEventListener("click", function () {
+        goTo(1);
+        tryStartMusic();
+      });
+
+      var startX = 0;
+      var tracking = false;
+
+      slidesEl.addEventListener("touchstart", function (e) {
+        if (!e.touches.length) return;
+        startX = e.touches[0].clientX;
+        tracking = true;
+      }, { passive: true });
+
+      slidesEl.addEventListener("touchend", function (e) {
+        if (!tracking) return;
+        tracking = false;
+        var endX = e.changedTouches[0].clientX;
+        var dx = endX - startX;
+        if (Math.abs(dx) < 50) return;
+        if (dx < 0) goTo(current + 1);
+        else goTo(current - 1);
+      }, { passive: true });
+
+      /* 花瓣 */
+      var petalsRoot = document.getElementById("petals");
+      for (var p = 0; p < 14; p++) {
+        var el = document.createElement("div");
+        el.className = "petal";
+        el.style.left = Math.random() * 100 + "%";
+        el.style.animationDuration = 12 + Math.random() * 10 + "s";
+        el.style.animationDelay = Math.random() * 12 + "s";
+        petalsRoot.appendChild(el);
+      }
+
+      /* 简易背景音乐 Web Audio */
+      var audioCtx = null;
+      var musicTimer = null;
+      var playing = false;
+      var melody = [523.25, 587.33, 659.25, 698.46, 659.25, 587.33, 523.25, 493.88];
+
+      function playNote(freq, start, dur) {
+        if (!audioCtx) return;
+        var osc = audioCtx.createOscillator();
+        var gain = audioCtx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, start);
+        gain.gain.linearRampToValueAtTime(0.08, start + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(start);
+        osc.stop(start + dur);
+      }
+
+      function tickMelody() {
+        if (!audioCtx || !playing) return;
+        var t = audioCtx.currentTime;
+        var step = 0.45;
+        melody.forEach(function (f, i) {
+          playNote(f, t + i * step, step * 0.9);
+        });
+      }
+
+      function tryStartMusic() {
+        if (playing) return;
+        var Ctx = window.AudioContext || window.webkitAudioContext;
+        if (!Ctx) return;
+        audioCtx = audioCtx || new Ctx();
+        if (audioCtx.state === "suspended") {
+          audioCtx.resume();
+        }
+        playing = true;
+        musicBtn.classList.add("playing");
+        tickMelody();
+        musicTimer = setInterval(tickMelody, melody.length * 450 + 800);
+      }
+
+      function stopMusic() {
+        playing = false;
+        musicBtn.classList.remove("playing");
+        if (musicTimer) {
+          clearInterval(musicTimer);
+          musicTimer = null;
+        }
+      }
+
+      musicBtn.addEventListener("click", function () {
+        if (playing) stopMusic();
+        else tryStartMusic();
+      });
+
+      document.addEventListener(
+        "visibilitychange",
+        function () {
+          if (document.hidden && playing) stopMusic();
+        }
+      );
+    })();
+  </script>
+</body>
+</html>
